@@ -12,10 +12,12 @@ class MainTableSeeder extends Seeder
      */
     public function run()
     {
+      for($a=0;$a<5;$a++){
         DB::table('main')->insert([
-            'upload_time' => time(),
-            'facebook_name' => str_random(10),
+            'upload_time' => time()+$a,
+            'facebook_name' => "test".$a,
         ]);
+      }
         //
     }
 }
