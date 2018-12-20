@@ -17,8 +17,8 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-Route::get('lists','ProductController@getList' );
+Route::get('lists','ApiController@getList' );
 
-Route::get('files/{type}/{id}','ProductController@getLogFile');
+Route::get('files/{type}/{id}','ApiController@getLogFile');
 
-Route::post('report','ProductController@reportLogFile');
+Route::post('report','ApiController@reportLogFile');

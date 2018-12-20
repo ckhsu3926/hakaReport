@@ -7,26 +7,42 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class ProductController extends Controller
+class ApiController extends Controller
 {
+    /**
+     * @return all report with json
+     */
     public function getList(){
-        return response(DB::table("main")->get());
+        return response()->json(DB::table("main")->get());
         #return response(DB::table("main")->where("upload_time","1544531060")->first()->facebook_name);
     }
 
+    /**
+     * @param string $type "component" or "setup"
+     * @param integer $id uplaod timestamp
+     *
+     * @return download file
+     */
     public function getLogFile($type,$id){
       if(Storage::exists($type."/".$id)){
-        return Storage::download($type."/".$id) ;
+        return Storage::download($type."/".$id,"hakaMOD_".ucfirst($type).".log");
       }
-      echo"<script>alert('not find');</script>";
+      echo"<script>alert('Not Found');</script>";
       return redirect("/");
     }
 
+    /**
+     * @param string $name 
+     * @param file $component hakamod_components.log
+     * @param file $setup hakamod_setup.log
+     *
+     * @return upload status
+     */
     public function reportLogFile(Request $request){
         $validate = $request->validate([
-          'name' => 'required',
-          'component' => 'required',
-          'setup' => 'required'
+          'name' => 'required|string',
+          'component' => 'required|file',
+          'setup' => 'required|file'
         ]);
 
         if(!Storage::files("component")){
