@@ -19,6 +19,6 @@ use Illuminate\Http\Request;
 
 Route::get('lists','ApiController@getList' );
 
-Route::get('files/{type}/{id}','ApiController@getLogFile');
+Route::post('files','ApiController@getLogFile');
 
 Route::post('report','ApiController@reportLogFile');

@@ -23,12 +23,16 @@ class ApiController extends Controller
      *
      * @return download file
      */
-    public function getLogFile($type,$id){
-      if(Storage::exists($type."/".$id)){
-        return Storage::download($type."/".$id,"hakaMOD_".ucfirst($type).".log");
-      }
-      echo"<script>alert('Not Found');</script>";
-      return redirect("/");
+    public function getLogFile(Request $request){
+        $validate = $request->validate([
+          'type' => 'required|string',
+          'id' => 'required|integer'
+        ]);
+        if(Storage::exists($request->type."/".$request->id)){
+          return Storage::download($request->type."/".$request->id,"hakaMOD_".ucfirst($request->type).".log");
+        }
+        echo"<script>alert('Not Found');</script>";
+        return redirect("/");
     }
 
     /**
@@ -70,8 +74,18 @@ class ApiController extends Controller
           "upload_time"=>$primary_key,
           "facebook_name"=>$request->name
         ]);
-        $request->file("component")->storeAs("component",$primary_key);
-        $request->file("setup")->storeAs("setup",$primary_key);
+        $content_setup = $request->file("setup")->get();
+        $content_component = $request->file("component")->get();
+        if( mb_detect_encoding($content_setup,"BIG-5,UTF-8")==="BIG-5" )
+        {
+            $content_setup = mb_convert_encoding($content_setup,"UTF-8","BIG-5");
+        }
+        if( mb_detect_encoding($content_component,"BIG-5,UTF-8")==="BIG-5" )
+        {
+            $content_component = mb_convert_encoding($content_component,"UTF-8","BIG-5");
+        }
+        Storage::put("setup/".$primary_key,$content_setup);
+        Storage::put("conpnent/".$primary_key,$content_component);
         return response()->json([
             "status"=>"200"
           ]);
