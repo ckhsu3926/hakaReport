@@ -14,11 +14,11 @@ class CreateMainTable extends Migration
     public function up()
     {
         Schema::create('main', function (Blueprint $table) {
-            $table->timestamp("upload_time");
-            $table->string("facebook_name");
+            $table->string("date");
+            $table->string("name");
             $table->binary("component");
             $table->binary("setup");
-            $table->primary("upload_time");
+            $table->primary("date");
         });
     }
 
