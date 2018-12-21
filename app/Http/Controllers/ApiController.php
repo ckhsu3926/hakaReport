@@ -13,25 +13,27 @@ class ApiController extends Controller
      * @return all report with json
      */
     public function getList(){
-        return response()->json(DB::table("main")->get());
-        #return response(DB::table("main")->where("upload_time","1544531060")->first()->facebook_name);
+        return response()->json(DB::table("main")->get()->reverse()->values());
     }
 
     /**
      * @param string $type "component" or "setup"
      * @param integer $id uplaod timestamp
      *
-     * @return download file
+     * @return not found or file content
      */
     public function getLogFile(Request $request){
         $validate = $request->validate([
           'type' => 'required|string',
           'id' => 'required|integer'
         ]);
-        if(Storage::exists($request->type."/".$request->id)){
-          return Storage::download($request->type."/".$request->id,"hakaMOD_".ucfirst($request->type).".log");
+
+        $result=DB::table("main")->where("upload_time",$request->id)->first();
+        if($result)
+        {
+            return response($result->{$request->type});
         }
-        echo"<script>alert('Not Found');</script>";
+        echo"<script>alert('Not Found!');</script>";
         return redirect("/");
     }
 
@@ -40,7 +42,7 @@ class ApiController extends Controller
      * @param file $component hakamod_components.log
      * @param file $setup hakamod_setup.log
      *
-     * @return upload status
+     * @return error file type or 200
      */
     public function reportLogFile(Request $request){
         $validate = $request->validate([
@@ -48,13 +50,6 @@ class ApiController extends Controller
           'component' => 'required|file',
           'setup' => 'required|file'
         ]);
-
-        if(!Storage::files("component")){
-          Storage::makeDirectory("component");
-        }
-        if(!Storage::files("setup")){
-          Storage::makeDirectory("setup");
-        }
 
         if( Str::lower($request->file("component")->getClientOriginalName()) !== "hakamod_components.log"){
           return response()->json([
@@ -70,10 +65,6 @@ class ApiController extends Controller
         }
 
         $primary_key = time();
-        DB::table("main")->insert([
-          "upload_time"=>$primary_key,
-          "facebook_name"=>$request->name
-        ]);
         $content_setup = $request->file("setup")->get();
         $content_component = $request->file("component")->get();
         if( mb_detect_encoding($content_setup,"BIG-5,UTF-8")==="BIG-5" )
@@ -84,10 +75,14 @@ class ApiController extends Controller
         {
             $content_component = mb_convert_encoding($content_component,"UTF-8","BIG-5");
         }
-        Storage::put("setup/".$primary_key,$content_setup);
-        Storage::put("conpnent/".$primary_key,$content_component);
+        DB::table("main")->insert([
+          "upload_time"=>$primary_key,
+          "facebook_name"=>$request->name,
+          "setup"=>$content_setup,
+          "component"=>$content_component
+        ]);
         return response()->json([
             "status"=>"200"
-          ]);
+        ]);
     }
 }
