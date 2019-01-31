@@ -5,20 +5,32 @@ const tmpArray = [
 	{date:20190129113256,name:"ggccc"},{date:20190128114283,name:"xeriou"},{date:20190120114283,name:"cph"}
 ];
 
-function Body(props){
-	return props.row.map( (row) => {
-		return (<tr key={row.date}>
-			<td key={row.date+"date"} align="center">{row.date}</td>
-			<td key={row.date+"name"} align="center">{row.name}</td>
-			<td key={row.date+"component"} align="center">
-				<button>Components</button>
-			</td>
-			<td key={row.date+"setup"} align="center">
-				<button>Setup</button>
-			</td>
-		</tr>)
-		}
-	)
+class Body extends React.Component{
+	constructor(props){
+		super(props);
+		this.showRecordDetail = this.showRecordDetail.bind(this);
+	}
+
+	showRecordDetail(recordDate,recordType){
+		console.log(recordDate);
+		console.log(recordType);
+	}
+
+	render(){
+		return this.props.row.map( (row) => {
+			return (<tr key={row.date}>
+				<td key={row.date+"date"} align="center">{row.date}</td>
+				<td key={row.date+"name"} align="center">{row.name}</td>
+				<td key={row.date+"component"} align="center">
+					<button onClick={this.showRecordDetail.bind(this,row.date,"component")}>Components</button>
+				</td>
+				<td key={row.date+"setup"} align="center">
+					<button onClick={this.showRecordDetail.bind(this,row.date,"setup")}>Setup</button>
+				</td>
+			</tr>)
+			}
+		)
+	}
 }
 
 export default class List extends React.Component {
