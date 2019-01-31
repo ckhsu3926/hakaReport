@@ -14,7 +14,7 @@ class CreateMainTable extends Migration
     public function up()
     {
         Schema::create('main', function (Blueprint $table) {
-            $table->string("date");
+            $table->timestamp("date");
             $table->string("name");
             $table->binary("component");
             $table->binary("setup");

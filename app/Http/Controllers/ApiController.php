@@ -65,7 +65,7 @@ class ApiController extends Controller
         }
 
         #date_default_timezone_set("Asia/Taipei");
-        $primary_key = date("YmdHis");
+        $primary_key = time();
         $content_setup = $request->file("setup")->get();
         $content_component = $request->file("component")->get();
         if( mb_detect_encoding($content_setup,"BIG-5,UTF-8")==="BIG-5" )

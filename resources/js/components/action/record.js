@@ -1,0 +1,1 @@
+export const addRecord = article => ({ type: "addRecord", payload: article });

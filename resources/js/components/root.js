@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import { HashRouter , Route, Link } from "react-router-dom";
 import List from "./page/list";
 import Links from "./page/links";
-import Report from "./page/report";
+import { Report } from "./page/report";
+import { store } from "./store/store";
+import { Provider } from "react-redux";
 
 class Root extends React.Component{
     render(){
@@ -23,8 +25,10 @@ class Root extends React.Component{
                             </li>
                         </ul>
                     </nav>
-                    <Route exact path="/" component={List}></Route>
-                    <Route path="/report" component={Report}></Route>
+                    <Provider store={store}>
+                        <Route exact path="/" component={List}></Route>
+                        <Route path="/report" component={Report}></Route>
+                    </Provider>
                     <Route path="/links" component={Links}></Route>
                 </div>
             </HashRouter>
