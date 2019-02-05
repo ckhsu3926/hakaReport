@@ -5,7 +5,7 @@ const tmpArray = []
 export const singleReducer = (state = tmpArray, action) => {
 	switch(action.type){
 		case "addRecord":
-			return [...state,action.payload]
+			return [action.payload,...state]
 		break;
 		case "listRecord":
 			return [...state,...action.payload.map((row)=>{

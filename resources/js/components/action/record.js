@@ -8,7 +8,7 @@ export function fetchList(src){
 			response => response.json(),
 			error => console.log("Error at get List ,",error)
 		).then(json => 
-			dispatch(listRecord(json))
+			dispatch(listRecord(json.reverse()))
 		)
 	}
 }

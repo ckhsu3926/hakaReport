@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 const Headers = ["上傳日期","姓名","hakaMOD_Setup.log","hakaMOD_Component.log"];
 
@@ -10,23 +11,26 @@ class listTable extends React.Component{
 	}
 
 	showRecordDetail(recordDate,recordType){
-	}
-
-	componentDidMount(){
-		window.test=this.props;
+		this.props.history.push("/Log");
 	}
 
 	render(){
-		const listTableBody = this.props.data.reverse().map( (row) => { 
+		const listTableBody = this.props.data.map( (row) => { 
 			return (
 			<tr key={row.date}>
 				<td key={row.date+"date"} align="center">{new Date(row.date).toLocaleString()}</td>
 				<td key={row.date+"name"} align="center">{row.name}</td>
 				<td key={row.date+"component"} align="center">
-					<button onClick={this.showRecordDetail.bind(this,row.date,"component")}>Components</button>
+					<NavLink to={{
+						pathname:"/log"
+						,state:{ type:"component", date:row.date/1000 }
+					}}>Components</NavLink>
 				</td>
 				<td key={row.date+"setup"} align="center">
-					<button onClick={this.showRecordDetail.bind(this,row.date,"setup")}>Setup</button>
+					<NavLink to={{
+						pathname:"/log"
+						,state:{ type:"setup", date:row.date/1000 }
+					}}>Setup</NavLink>
 				</td>
 			</tr>
 		)})

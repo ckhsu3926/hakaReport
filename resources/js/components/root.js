@@ -6,6 +6,7 @@ import Links from "./page/links";
 import { Report } from "./page/report";
 import { store } from "./store/store";
 import { Provider } from "react-redux";
+import { Log } from "./page/log";
 
 class Root extends React.Component{
     render(){
@@ -13,23 +14,16 @@ class Root extends React.Component{
             <HashRouter>
                 <div>
                     <nav>
-                        <ul>
-                            <li>
-                                <Link to="/">List</Link>
-                            </li>
-                            <li>
-                                <Link to="/report">Report</Link>
-                            </li>
-                            <li>
-                                <Link to="/links">Links</Link>
-                            </li>
-                        </ul>
+                        <Link to="/">List</Link>
+                        <Link to="/report">Report</Link>
+                        <Link to="/links">Links</Link>
                     </nav>
                     <Provider store={store}>
                         <Route exact path="/" component={List}></Route>
                         <Route path="/report" component={Report}></Route>
                     </Provider>
                     <Route path="/links" component={Links}></Route>
+                    <Route path="/log" component={Log}></Route>
                 </div>
             </HashRouter>
         );

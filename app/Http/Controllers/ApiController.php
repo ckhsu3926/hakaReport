@@ -13,7 +13,7 @@ class ApiController extends Controller
      * @return all report with json
      */
     public function getList(){
-        return response()->json(DB::table("main")->get()->values());
+        return response()->json(DB::table("main")->select("date","name")->get());
     }
 
     /**
@@ -28,7 +28,7 @@ class ApiController extends Controller
           'date' => 'required|integer'
         ]);
 
-        $result=DB::table("main")->where("upload_time",$request->date)->first();
+        $result=DB::table("main")->where("date",$request->date)->first();
         if($result)
         {
             return response($result->{$request->type});
