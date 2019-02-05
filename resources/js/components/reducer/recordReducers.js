@@ -1,9 +1,9 @@
 const tmpArray = [
-	{date:20180129113256,name:"ggccc"},
-	{date:20180128114283,name:"xeriou"},
-	{date:20180120115421,name:"cph"},
-	{date:20180120111093,name:"star"},
-	{date:20180120117524,name:"sudo"}
+	{date:1548942343594,name:"ggccc"},
+	{date:1548947653594,name:"xeriou"},
+	{date:1548941923594,name:"cph"},
+	{date:1548943483594,name:"star"},
+	{date:1548942943594,name:"sudo"}
 ];
 
 export const singleReducer = (state = tmpArray, action) => {
