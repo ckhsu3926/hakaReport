@@ -13,7 +13,7 @@ class ApiController extends Controller
      * @return all report with json
      */
     public function getList(){
-        return response()->json(DB::table("main")->get()->reverse()->values());
+        return response()->json(DB::table("main")->get()->values());
     }
 
     /**
@@ -83,7 +83,9 @@ class ApiController extends Controller
           "component"=>$content_component
         ]);
         return response()->json([
-            "status"=>"200"
+            "status"=>"200",
+            "date"=>$primary_key,
+            "name"=>$request->name
         ]);
     }
 }

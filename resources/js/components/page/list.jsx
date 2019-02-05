@@ -17,9 +17,10 @@ class listTable extends React.Component{
 	}
 
 	render(){
-		const listTableBody = this.props.data.map( (row) => { return (
+		const listTableBody = this.props.data.reverse().map( (row) => { 
+			return (
 			<tr key={row.date}>
-				<td key={row.date+"date"} align="center">{row.date}</td>
+				<td key={row.date+"date"} align="center">{new Date(row.date).toLocaleString()}</td>
 				<td key={row.date+"name"} align="center">{row.name}</td>
 				<td key={row.date+"component"} align="center">
 					<button onClick={this.showRecordDetail.bind(this,row.date,"component")}>Components</button>
