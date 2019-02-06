@@ -12,11 +12,13 @@ class Root extends React.Component{
     render(){
         return (
             <HashRouter>
-                <div>
-                    <nav>
-                        <Link to="/">List</Link>
-                        <Link to="/report">Report</Link>
-                        <Link to="/links">Links</Link>
+                <div className="container">
+                    <nav aria-label="breadcrumb">
+                        <ol className="breadcrumb">
+                            <li className="breadcrumb-item"><Link to="/">List</Link></li>
+                            <li className="breadcrumb-item"><Link to="/report">Report</Link></li>
+                            <li className="breadcrumb-item"><Link to="/links">Links</Link></li>
+                        </ol>
                     </nav>
                     <Provider store={store}>
                         <Route exact path="/" component={List}></Route>

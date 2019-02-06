@@ -19,11 +19,17 @@ class reportBody extends React.Component {
     }
 
     submitForm(event){
-        if(this.componentFile.current.files[0].name.toLowerCase() !== "hakamod_components.log"){
+        if(this.state.name.trim()===""){
+            alert("請輸入可供辨識之姓名");
+            return ;
+        }
+        if(typeof(this.componentFile.current.files[0])==="undefined"
+            || this.componentFile.current.files[0].name.toLowerCase() !== "hakamod_components.log"){
             alert("component failed");
             return ;
         }
-        if(this.setupFile.current.files[0].name.toLowerCase() !== "hakamod_setup.log"){
+        if(typeof(this.setupFile.current.files[0])==="undefined"
+            || this.setupFile.current.files[0].name.toLowerCase() !== "hakamod_setup.log"){
             alert("setup failed");
             return ;
         }
@@ -41,15 +47,21 @@ class reportBody extends React.Component {
     render(){
         return (
             <div>
-              <form onSubmit={this.submitForm}>
-                <label>Facebook Name : </label>
-                <input type="text" onChange={this.onNameChange} value={this.state.name}/><br/>
-                <label>hakaMOD_Components.log : </label>
-                <input type="file" ref={this.componentFile}/><br/>
-                <label>hakaMOD_Setup.log : </label>
-                <input type="file" ref={this.setupFile}/><br/>
-                <input type="submit" value="上傳" />
-              </form>
+                <form onSubmit={this.submitForm}>
+                    <div className="form-group">
+                        <label htmlFor="report_name">Facebook Name : </label>
+                        <input type="text" onChange={this.onNameChange} value={this.state.name} id="report_name" className="form-control" aria-describedby="nameHelp" placeholder="請輸入可供辨識之姓名"/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="report_component">hakaMOD_Components.log</label>
+                        <input type="file" ref={this.componentFile} id="report_component" className="form-control-file" aria-describedby="componentHelp"/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="report_setup">hakaMOD_Setup.log</label>
+                        <input type="file" ref={this.setupFile} id="report_setup" className="form-control-file" aria-describedby="setupHelp"/>
+                    </div>
+                    <input type="submit" value="上傳" className="btn btn-primary" disabled={!this.state.name}/>
+                </form>
             </div>
         );
     }

@@ -30,14 +30,23 @@ export class Log extends React.Component {
     }
 
     render(){
-        let logData = this.state.logData.split('\n').map((item, i) => {
-            return <p key={i}>{item}</p>;
-        });
-        return (
-            <div>
-                <a className="fas fa-arrow-left" onClick={this.onHistoryBack}>aaa</a>
-                {logData}
-            </div>
-        );
+        if(this.state.logData.length===0){
+            return (
+                <button className="btn btn-primary" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button>
+            )
+        }else{
+            let logData = this.state.logData.split('\n').map((item, i) => {
+                return <p key={i}>{item}</p>;
+            });
+            return (
+                <div>
+                    <a className="fas fa-arrow-alt-circle-left fa-2x float-right" onClick={this.onHistoryBack}>回到列表</a>
+                    {logData}
+                </div>
+            );
+        }
     }
 }
