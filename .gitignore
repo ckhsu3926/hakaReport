@@ -14,5 +14,3 @@ _ide_helper.php
 /public/mix-manifest.json
 /*.log
 .DS_Store
-
-/database/database.sqlite
