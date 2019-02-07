@@ -4,7 +4,7 @@ import { HashRouter , Route, Link } from "react-router-dom";
 import List from "./page/list";
 import Links from "./page/links";
 import { Report } from "./page/report";
-import { store } from "./store/store";
+import { store } from "./store/Store";
 import { Provider } from "react-redux";
 import { Log } from "./page/log";
 

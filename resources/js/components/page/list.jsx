@@ -15,6 +15,7 @@ class listTable extends React.Component{
 	}
 
 	render(){
+		console.log(this.props);
 		if(this.props.data.length==0){
 			return (
 				<button className="btn btn-primary" type="button" disabled>

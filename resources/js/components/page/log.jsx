@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { appURL } from "../constVariables"
 
 export class Log extends React.Component {
     constructor(props){
@@ -19,7 +20,7 @@ export class Log extends React.Component {
             const logInfo = new FormData();
             logInfo.append("type",this.props.location.state.type);
             logInfo.append("date",this.props.location.state.date);
-            fetch("http://127.0.0.1:8000/api/files",{method: "POST",body: logInfo})
+            fetch(appURL + "api/files",{method: "POST",body: logInfo})
             .then(
                 response => response.text(),
                 error => console.log("Error at showLog ,",error)

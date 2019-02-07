@@ -4,13 +4,10 @@ const tmpArray = []
 
 export const singleReducer = (state = tmpArray, action) => {
 	switch(action.type){
-		case "addRecord":
-			return [action.payload,...state]
-		break;
 		case "listRecord":
-			return [...state,...action.payload.map((row)=>{
+			return action.payload.map((row)=>{
 				return {date:row.date*1000,name:row.name}
-			})]
+			})
 		break;
 		default:
 			return state
