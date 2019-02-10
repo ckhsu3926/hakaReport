@@ -5,5 +5,3 @@ import { fetchList } from "../action/record";
 
 export const store = createStore(singleReducer,applyMiddleware(thunkMiddleware));
 store.dispatch(fetchList());
-
-window.store = store;

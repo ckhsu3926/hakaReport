@@ -31,23 +31,15 @@ export class Log extends React.Component {
     }
 
     render(){
-        if(this.state.logData.length===0){
-            return (
-                <button className="btn btn-primary" type="button" disabled>
-                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    Loading...
-                </button>
-            )
-        }else{
-            let logData = this.state.logData.split('\n').map((item, i) => {
-                return <p key={i}>{item}</p>;
-            });
-            return (
-                <div>
-                    <a className="fas fa-arrow-alt-circle-left fa-2x float-right" onClick={this.onHistoryBack}>回到列表</a>
-                    {logData}
-                </div>
-            );
-        }
+        let logData = this.state.logData.split('\n').map((item, i) => {
+            return <p key={i}>{item}</p>;
+        });
+        return (
+            <div>
+                {this.state.logData.length===0?<span style={{fontSize: '3em'}}>Loading</span>:""}
+                <a className="fas fa-arrow-alt-circle-left fa-2x float-right" onClick={this.onHistoryBack}>回到列表</a>
+                {logData}
+            </div>
+        );
     }
 }

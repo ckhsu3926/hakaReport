@@ -15,9 +15,9 @@ class Root extends React.Component{
                 <div className="container">
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
-                            <li className="breadcrumb-item"><Link to="/">List</Link></li>
-                            <li className="breadcrumb-item"><Link to="/report">Report</Link></li>
-                            <li className="breadcrumb-item"><Link to="/links">Links</Link></li>
+                            <li className="breadcrumb-item"><Link to="/">回報列表</Link></li>
+                            <li className="breadcrumb-item"><Link to="/report">我要回報</Link></li>
+                            <li className="breadcrumb-item"><Link to="/links">連結</Link></li>
                         </ol>
                     </nav>
                     <Provider store={store}>
