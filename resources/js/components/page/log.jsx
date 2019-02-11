@@ -6,7 +6,11 @@ export class Log extends React.Component {
     constructor(props){
         super(props);
         this.onHistoryBack = this.onHistoryBack.bind(this);
-        this.state = { logData: "" };
+        this.state = {
+            logData: "",
+            IS_LOADING: true,
+            IS_FETCHFAILED: false,
+        };
     }
 
     onHistoryBack(){
@@ -22,23 +26,33 @@ export class Log extends React.Component {
             logInfo.append("date",this.props.location.state.date);
             fetch(appURL + "api/files",{method: "POST",body: logInfo})
             .then(
-                response => response.text(),
-                error => console.log("Error at showLog ,",error)
-            ).then(text => {
-                this.setState({logData: text});
-            })
+                response => {
+                    if(response.status >= 400){
+                        throw new Error("Bad response from server");
+                    }
+                    return response.text()
+                }
+            ).then( text => {
+                this.setState({
+                    logData: text,
+                    IS_LOADING: false,
+                    IS_FETCHFAILED: false
+                });
+            }).catch( e => {
+                this.setState({
+                IS_LOADING: false,
+                IS_FETCHFAILED: e.toString()
+            })} )
         }
     }
 
     render(){
-        let logData = this.state.logData.split('\n').map((item, i) => {
-            return <p key={i}>{item}</p>;
-        });
         return (
             <div>
-                {this.state.logData.length===0?<span style={{fontSize: '3em'}}>Loading</span>:""}
+                {this.state.IS_LOADING?<span style={{fontSize: '3em'}}>Loading</span>:""}
+                {this.state.IS_FETCHFAILED?<span style={{fontSize: '3em'}}>{this.state.IS_FETCHFAILED}</span>:""}
                 <a className="fas fa-arrow-alt-circle-left fa-2x float-right" onClick={this.onHistoryBack}>回到列表</a>
-                {logData}
+                <div className="display-linebreak">{this.state.logData}</div>
             </div>
         );
     }

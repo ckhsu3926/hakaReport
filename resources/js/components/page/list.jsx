@@ -34,7 +34,6 @@ class listTable extends React.Component{
 				</td>
 			</tr>
 		)})
-		console.log(this.props.store);
 		return (
 			<div>
 				{ this.props.store.IS_LOADING?<h2>LOADING...</h2>:"" }
