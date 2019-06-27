@@ -1,1 +1,1 @@
-export const appURL = "http://127.0.0.1:8000/";
+export const appURL = process.env.MIX_APP_URL;

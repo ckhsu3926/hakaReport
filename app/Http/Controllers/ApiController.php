@@ -38,6 +38,20 @@ class ApiController extends Controller
     }
 
     /**
+     * @param string $input_content
+     *
+     * @return checked input_content
+     */
+    private function detectAndConvertEncoding(String $input_content){
+        $originEncoding = mb_detect_encoding($input_content,"BIG-5,UTF-8,GB18030");
+        if($originEncoding !== "UTF-8"){
+            return mb_convert_encoding($input_content,"UTF-8",$originEncoding);
+        }else{
+            return $input_content;
+        }
+    }
+
+    /**
      * @param string $name 
      * @param file $component hakamod_components.log
      * @param file $setup hakamod_setup.log
@@ -66,16 +80,8 @@ class ApiController extends Controller
 
         #date_default_timezone_set("Asia/Taipei");
         $primary_key = time();
-        $content_setup = $request->file("setup")->get();
-        $content_component = $request->file("component")->get();
-        if( mb_detect_encoding($content_setup,"BIG-5,UTF-8")==="BIG-5" )
-        {
-            $content_setup = mb_convert_encoding($content_setup,"UTF-8","BIG-5");
-        }
-        if( mb_detect_encoding($content_component,"BIG-5,UTF-8")==="BIG-5" )
-        {
-            $content_component = mb_convert_encoding($content_component,"UTF-8","BIG-5");
-        }
+        $content_setup = $this->detectAndConvertEncoding($request->file("setup")->get());
+        $content_component = $this->detectAndConvertEncoding($request->file("component")->get());
         DB::table("main")->insert([
           "date"=>$primary_key,
           "name"=>$request->name,

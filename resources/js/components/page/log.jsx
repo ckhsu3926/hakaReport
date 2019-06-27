@@ -51,7 +51,7 @@ export class Log extends React.Component {
             <div>
                 {this.state.IS_LOADING?<span style={{fontSize: '3em'}}>Loading</span>:""}
                 {this.state.IS_FETCHFAILED?<span style={{fontSize: '3em'}}>{this.state.IS_FETCHFAILED}</span>:""}
-                <a className="fas fa-arrow-alt-circle-left fa-2x float-right" onClick={this.onHistoryBack}>回到列表</a>
+                <a className="fas fa-arrow-alt-circle-left fa-2x float-right position-relative" onClick={this.onHistoryBack}>回到列表</a>
                 <div className="display-linebreak">{this.state.logData}</div>
             </div>
         );
